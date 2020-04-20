@@ -1,0 +1,47 @@
+{% load static %}<!DOCTYPE html>
+<html>
+  <head>
+    <title>Dominate</title>
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet" type="text/css">
+    <link href="https://extra-uru1z3cxu.now.sh/css/extra.css" rel="stylesheet" type="text/css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.css" rel="stylesheet" type="text/css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" rel="stylesheet" type="text/css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+    <script src="{% static 'intercooler-1.2.2.js' %}"></script>
+  </head>
+  <body>
+    <div class="flex flex-col items-center justify-center bg-teal-200 h-screen">
+      <div class="flex flex-row items-center justify-between bg-gray-200 shadow-xl p-2 rounded-lg w-80 h-auto">
+        <div>
+          <span class="text-base font-normal text-gray-700">Upload limits:</span>
+          <span class="text-base font-normal text-gray-700 mr-5" ic-poll="2s" ic-src="/limits"></span>
+        </div>
+        <a href="#ex1" ic-get-from="/history" ic-target="#history_content" rel="modal:open">
+          <i class="fas fa-history text-gray-600 font-medium text-lg mr-3"></i>
+        </a>
+      </div>
+      <div class="modal" id="ex1">
+        <div class="flex flex-col" id="history_content">Here is history data</div>
+      </div>
+      <form class="flex flex-col justify-center" enctype="multipart/form-data" ic-post-to="/file" ic-replace-target="true" ic-target="#result_item">
+        <div class="flex flex-col bg-green-400 shadow-xl p-1 rounded-lg w-80 h-auto">
+          <p class="text-base font-thin text-white">Write down your mark here</p>
+          <input class="shadow border rounded m-1 p-1 text-base text-center font-thin" id="wm_text" name="mark_text" placeholder="your watermark text" type="text">
+        </div>
+        <div class="flex flex-col bg-white shadow-xl p-2 rounded-lg w-80 h-80">
+          <div class="flex flex-col items-center justify-center border-dashed border-2 border-gray-200 h-full">
+            <i class="fas fa-file-upload text-gray-300 font-medium text-6xl" onclick="$('#fileupload').click()"></i>
+            <p class="text-gray-500 mt-4" id="show_info">Find File</p>
+            <button class="flex justify-center bg-green-400 px-3 py-2 mt-4 text-white rounded shadow" type="submit">Upload</button>
+            <input class="hidden" id="fileupload" name="ori_img" onchange="$('#show_info').text(this.value.split(&quot;\\&quot;).pop(-1))" type="file">
+            {% csrf_token %}
+          </div>
+        </div>
+      </form>
+      <div class="flex flex-col bg-white items-center">
+        <span id="result_item"></span>
+      </div>
+    </div>
+  </body>
+</html>

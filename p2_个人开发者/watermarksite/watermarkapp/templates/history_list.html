@@ -1,0 +1,6 @@
+{% for filename in filename_list %}<div class="flex flex-row items-center justify-between bg-white p-2 w-auto">
+  <p class="text-base font-normal text-gray-800">{{filename}}.jpg</p>
+  <a href="/download?filename={{filename}}">
+    <i class="fas fa-download text-gray-800 font-medium text-lg"></i>
+  </a>
+</div>{% endfor %}
